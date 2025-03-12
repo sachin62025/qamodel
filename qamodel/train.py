@@ -20,17 +20,22 @@ def train_model(filepath, epochs=20, learning_rate=0.001, batch_size=1):
     model = SimpleRNN(len(vocab.vocab))
     criterion = torch.nn.CrossEntropyLoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
-
     # Training loop
     for epoch in range(epochs):
         total_loss = 0
+        num_batches = 0  # Count batches
+
         for question, answer in dataloader:
             optimizer.zero_grad()
             output = model(question)
             loss = criterion(output, answer[0])
             loss.backward()
             optimizer.step()
+            
             total_loss += loss.item()
-        print(f"Epoch {epoch+1}, Loss: {total_loss:.4f}")
+            num_batches += 1  # Increment batch count
+
+        avg_loss = total_loss / num_batches  # Compute average loss
+        print(f"Epoch {epoch+1}, Average Loss: {avg_loss:.4f}")
 
     return model, vocab
