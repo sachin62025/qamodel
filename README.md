@@ -20,4 +20,4 @@ model, vocab = train_model(path)
   answer = predict(model, vocab,question)
   print(f'Question {question} \nAnswer : {answer}')
 ```
-complete notebook: https://www.kaggle.com/code/sachinkumar62/question-answer-system
+Complete Notebook: https://www.kaggle.com/code/sachinkumar62/question-answer-system
