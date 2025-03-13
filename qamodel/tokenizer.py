@@ -1,5 +1,11 @@
+# def tokenize(text):
+#     """Tokenizes and cleans the text."""
+#     text = text.lower().replace('?', '').replace("'", "")
+#     return text.split()
 def tokenize(text):
-    """Tokenizes and cleans the text."""
+    """Tokenizes and cleans the text safely."""
+    if not isinstance(text, str):  # Ensure text is a string
+        text = str(text) if text is not None else ""
     text = text.lower().replace('?', '').replace("'", "")
     return text.split()
 

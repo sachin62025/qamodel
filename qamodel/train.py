@@ -26,9 +26,22 @@ def train_model(filepath, epochs=20, learning_rate=0.001, batch_size=1):
         num_batches = 0  # Count batches
 
         for question, answer in dataloader:
+            if answer.numel() == 0:  # Check if answer is empty
+                print("Empty answer found! Debugging data:")
+                print(f"Question: {question}")
+                print(f"Answer: {answer}")  # Print answer tensor
+                print(f"Answer shape: {answer.shape}")
+                raise ValueError("Target 'answer' is empty. Check data preprocessing.")
             optimizer.zero_grad()
             output = model(question)
-            loss = criterion(output, answer[0])
+            if len(answer) == 0:
+                answer = torch.tensor([0])  # Prevent empty target issues
+
+            # loss = criterion(output, answer[0])
+            if answer.numel() == 0:  # Check if answer is empty
+                raise ValueError("Target 'answer' is empty. Check data preprocessing.")
+            loss = criterion(output, answer.squeeze(1))  # Ensure correct shape
+
             loss.backward()
             optimizer.step()
             

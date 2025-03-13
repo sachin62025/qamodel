@@ -5,6 +5,7 @@ class SimpleRNN(nn.Module):
         super(SimpleRNN, self).__init__()
         self.embedding = nn.Embedding(vocab_size, embedding_dim)
         self.rnn = nn.RNN(embedding_dim, hidden_size, batch_first=True)
+        self.rnn = nn.RNN(embedding_dim, hidden_size, batch_first=True)
         self.fc = nn.Linear(hidden_size, vocab_size)
 
     def forward(self, question):
